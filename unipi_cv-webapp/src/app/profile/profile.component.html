@@ -1,0 +1,122 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+<div class="d-flex justify-content-center">
+<h2>Student Profile</h2>
+</div>
+<br>
+<br>    
+        <img [src]="selectedImg">
+       
+        <div class="form-group">
+            <input
+            style="display: none"
+            type="file" (change)="onAvChanged($event)" 
+            #AvInput>
+            <button (click)="AvInput.click()" class="btn btn-primary">Select Avatar(otpional)</button>
+            <!-- <button (click)="getAv()" class="btn btn-primary">View Uploaded Cv</button> -->
+        </div>
+
+<form [formGroup]="registerForm" >
+
+        <div class="form-group">
+                <input
+                style="display: none"
+                type="file" (change)="onFileChanged($event)" formControlName="cv" class="form-control"
+                #fileInput>
+                <button (click)="fileInput.click()" class="btn btn-primary">Select Cv(required)</button>
+                <button (click)="getCv()" class="btn btn-primary">View Uploaded Cv</button>
+            </div>
+
+        <div class="form-group">
+                <label for="language">Select Known Languages(required)</label>
+            <ng-multiselect-dropdown
+                [placeholder]=""
+                [data]="languages"
+                [(ngModel)]="selectedLanguage"
+                formControlName="language"
+                [settings]="dropdownSettingsLang"
+                >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="form-group">
+                <label for="platform">Select Known Platforms(required)</label>
+            <ng-multiselect-dropdown
+                [placeholder]=""
+                [data]="platforms"
+                [(ngModel)]="selectedPlatform"
+                formControlName="platform"
+                [settings]="dropdownSettingsPlat"
+                >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="form-group">
+                <label for="keyword">Select Interest Keywords(required)</label>
+            <ng-multiselect-dropdown
+                [ngClass]="{ 'is-invalid': submitted && f.keyword.errors }"
+                [placeholder]=""
+                [data]="keywords"
+                [(ngModel)]="selectedKeyword"
+                formControlName="keyword"
+                [settings]="dropdownSettingsKey"
+                >
+            </ng-multiselect-dropdown>
+            <div *ngIf="submitted && f.keyword.errors" class="invalid-feedback">
+                <div *ngIf="f.keyword.errors.required">Name is required</div>
+            </div>
+        </div>
+
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="surname">Surname</label>
+        <input type="text" formControlName="surname"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.surname.errors }" />
+        <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
+            <div *ngIf="f.surname.errors.required">Surname is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="thesis">Thesis</label>
+        <input type="text" formControlName="thesis" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.thesis.errors }" />
+        <div *ngIf="submitted && f.thesis.errors" class="invalid-feedback">
+            <div *ngIf="f.thesis.errors.required">Thesis is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="grade">Grade</label>
+        <input type="text" formControlName="grade" type="number" step="0.1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.grade.errors }" />
+        <div *ngIf="submitted && f.grade.errors" class="invalid-feedback">
+            <div *ngIf="f.grade.errors.required">Grade is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div><div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+            <div *ngIf="f.phone.errors.required">Phone is required</div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit()">Save</button>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+</div>
+</div>
+</div>

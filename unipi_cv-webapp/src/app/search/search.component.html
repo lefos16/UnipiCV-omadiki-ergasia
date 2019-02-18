@@ -1,0 +1,196 @@
+﻿<div class="container">
+  <div class="row">
+      <div class="col-md-6 offset-md-3">
+<div class="d-flex justify-content-center">
+<h2>Search</h2>
+</div>
+<br>
+<br>
+<form [formGroup]="registerForm" >
+    <div class="form-group">
+        <label for="language">Search for Known Languages</label>
+    <ng-multiselect-dropdown
+        [placeholder]=""
+        [data]="languages"
+        [(ngModel)]="selectedLanguage"
+        formControlName="language"
+        [settings]="dropdownSettingsLang"
+        >
+    </ng-multiselect-dropdown>
+</div>
+
+<div class="form-group">
+        <label for="platform">Search for Known Platforms</label>
+    <ng-multiselect-dropdown
+        [placeholder]=""
+        [data]="platforms"
+        [(ngModel)]="selectedPlatform"
+        formControlName="platform"
+        [settings]="dropdownSettingsPlat"
+        >
+    </ng-multiselect-dropdown>
+</div>
+
+<div class="form-group">
+  <label for="keyword">Search for Interest Keywords</label>
+<ng-multiselect-dropdown
+  [placeholder]=""
+  [data]="keywords"
+  [(ngModel)]="selectedKeyword"
+  formControlName="keyword"
+  [settings]="dropdownSettingsKey"
+  >
+</ng-multiselect-dropdown>
+</div>
+
+<div class="form-group">
+    <label for="grade">Search for Minimun Grade</label>
+    <input type="text" formControlName="grade" type="number"  step="0.1" class="form-control"  />
+    
+</div>
+
+<div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit()">Search</button>
+    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+</div>
+    <button class="btn btn-link" (click)="reset()">Reset</button>
+
+</form>
+</div>
+</div>
+</div>
+
+<div class="w-100 p-3" >
+<mat-table   #table [dataSource]="dataSource" >
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line" >
+          <input  matInput   readonly
+            [(ngModel)]="row.currentData.name">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line">
+          <input matInput  readonly
+            [(ngModel)]="row.currentData.surname">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line">
+          <input matInput   readonly
+            [(ngModel)]="row.currentData.email">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line">
+          <input matInput  readonly
+            [(ngModel)]="row.currentData.phone">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="grade">
+      <mat-header-cell *matHeaderCellDef> Grade </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line">
+          <input matInput   readonly
+            [(ngModel)]="row.currentData.grade">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="thesis">
+      <mat-header-cell *matHeaderCellDef> Thesis </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field class="no-line">
+          <input matInput   readonly
+            [(ngModel)]="row.currentData.thesis">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cv">
+      <mat-header-cell *matHeaderCellDef> CV </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <!-- <mat-form-field class="no-line"> -->
+          <button matButton (click)="getCv(row.currentData.cv)" class="btn btn-primary">Cv link</button>
+        <!-- </mat-form-field> -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="languageEntities">
+        <mat-header-cell *matHeaderCellDef> Known Languages </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-form-field class="no-line">
+                <mat-accordion>
+                        <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
+                                              (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">                                
+                                    View                                 
+                                </mat-expansion-panel-header>
+                                <mat-action-row *ngFor="let language of row.currentData.languageEntities">
+                                             <input matInput  readonly [(ngModel)]="language.name">                                              
+                            </mat-action-row>        
+                        </mat-expansion-panel>                                        
+            </mat-accordion>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="platformEntities">
+        <mat-header-cell *matHeaderCellDef> Known Platforms </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-form-field class="no-line">
+                <mat-accordion>
+                        <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
+                                              (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">                                
+                                    View                                 
+                                </mat-expansion-panel-header>
+                                <mat-action-row *ngFor="let platform of row.currentData.platformEntities">
+                                             <input matInput  readonly [(ngModel)]="platform.name">                                              
+                            </mat-action-row>        
+                        </mat-expansion-panel>                                        
+            </mat-accordion>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="keywordEntities">
+        <mat-header-cell *matHeaderCellDef> Interest Keywords </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-form-field class="no-line">
+                <mat-accordion>
+                        <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
+                                              (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">                                
+                                    View                                 
+                                </mat-expansion-panel-header>
+                                <mat-action-row *ngFor="let keyword of row.currentData.keywordEntities">
+                                             <input matInput  readonly [(ngModel)]="keyword.name">                                              
+                            </mat-action-row>        
+                        </mat-expansion-panel>                                        
+            </mat-accordion>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+     
+      
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

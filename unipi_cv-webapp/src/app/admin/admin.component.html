@@ -1,0 +1,68 @@
+﻿<div class="container">
+  <div class="row">
+      <div class="col-md-6 offset-md-3">
+<div class="d-flex justify-content-center">
+<h1>User Management</h1>
+</div>
+<br>
+<br>
+<br>
+<br>
+<mat-table class="table-margin-bottom" #table [dataSource]="dataSource">
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['username']" [readonly]="!row.editing" placeholder="Username"
+          [(ngModel)]="row.currentData.username">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="password">
+    <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['password']" type="password" [readonly]="!row.editing" placeholder="Password"
+          [(ngModel)]="row.currentData.password">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actionsColumn">
+    <mat-header-cell *matHeaderCellDef>
+      <span class="btn-group-sm">
+
+        <button type="button" class="btn btn-primary bmd-btn-icon" color="accent" (click)="dataSource.createNew()">
+          <i class="material-icons">add</i>
+        </button> </span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row ; let i = index;">
+
+      <span class="btn-group-sm">
+
+        <button *ngIf="!row.editing" focusable="false" (click)="row.startEdit()" type="button"
+          class="btn btn-primary bmd-btn-icon" color="accent">
+          <i class="material-icons">edit</i>
+        </button> </span>
+
+      <span class="btn-group-sm">
+
+        <button *ngIf="row.editing" focusable="false" (click)="row.confirmEditCreate(); saveStudent(i, row.currentData.username, row.currentData.password); " type="button"
+          class="btn btn-primary bmd-btn-icon" color="accent">
+          <i class="material-icons">check</i>
+        </button> </span>
+      <div style="width: 20px;">
+      </div>
+      <span class="btn-group-sm">
+
+        <button type="button" class="btn btn-primary bmd-btn-icon " focusable="false" (click)="row.cancelOrDelete(); delete(row.currentData.username,i);">
+          <i class="material-icons">cancel</i>
+        </button> </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+</div>
+</div>
+</div>
